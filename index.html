@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo Oficial - Relicarios</title>
+    <style>
+        /* ========================================================
+           TIPOGRAFÍA CATCHY MAGER
+           ======================================================== */
+        @font-face {
+            font-family: 'Catchy Mager';
+            src: local('Catchy Mager Regular'), local('CatchyMager-Normal');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        /* ========================================================
+           PALETA DE COLORES OFICIAL
+           ======================================================== */
+        :root {
+            --color-platinum: #DADDD8;
+            --color-beige: #D0D8BA;       /* FONDO PRINCIPAL */
+            --color-sage: #A6A277;
+            --color-moss: #919063;
+            --color-coyote: #84765C;      /* TEXTOS Y TÍTULOS */
+            
+            --radius-card: 16px;
+            --shadow-subtle: 0 4px 15px rgba(132, 118, 92, 0.15);
+            --shadow-hover: 0 8px 25px rgba(145, 144, 99, 0.3);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Catchy Mager', serif; 
+            background-color: var(--color-beige);
+            color: var(--color-coyote);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        /* HEADER & LOGO */
+        header {
+            text-align: center;
+            padding: 40px 20px 20px;
+            background-color: var(--color-platinum);
+            border-bottom: 2px solid var(--color-sage);
+            box-shadow: var(--shadow-subtle);
+        }
+
+        .logo {
+            max-width: 220px;
+            height: auto;
+            margin-bottom: 10px;
+            mix-blend-mode: multiply;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: normal;
+            color: var(--color-coyote);
+            letter-spacing: 2px;
+        }
+
+        /* BARRA DE CONTROLES */
+        .controls-wrapper {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .control-input {
+            font-family: 'Catchy Mager', serif;
+            font-size: 1.1rem;
+            padding: 12px 20px;
+            border: 2px solid var(--color-sage);
+            border-radius: 30px;
+            background-color: var(--color-platinum);
+            color: var(--color-coyote);
+            outline: none;
+            min-width: 250px;
+            transition: border-color 0.3s ease;
+        }
+
+        .control-input:focus {
+            border-color: var(--color-moss);
+        }
+
+        .control-input::placeholder {
+            color: var(--color-sage);
+        }
+
+        /* GRILLA DE PRODUCTOS */
+        .catalog-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+            padding-bottom: 80px;
+        }
+
+        .product-card {
+            background-color: var(--color-platinum);
+            border-radius: var(--radius-card);
+            overflow: hidden;
+            box-shadow: var(--shadow-subtle);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 1px solid transparent;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-hover);
+            border-color: var(--color-sage);
+        }
+
+        .card-image {
+            width: 100%;
+            height: 250px;
+            background-color: #f5f5f5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .product-card:hover .card-image img {
+            transform: scale(1.05);
+        }
+
+        .card-content {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+            text-align: center;
+        }
+
+        .card-category {
+            font-size: 0.9rem;
+            color: var(--color-moss);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            color: var(--color-coyote);
+            margin-bottom: 10px;
+        }
+
+        .card-details {
+            font-size: 1rem;
+            color: var(--color-coyote);
+            margin-top: auto;
+            background: rgba(166, 162, 119, 0.15);
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px dashed var(--color-sage);
+        }
+
+        /* MODAL DE DETALLE */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(132, 118, 92, 0.8);
+            backdrop-filter: blur(5px);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal-overlay.open {
+            display: flex;
+        }
+
+        .modal-box {
+            background: var(--color-platinum);
+            border: 2px solid var(--color-sage);
+            border-radius: 20px;
+            width: 100%;
+            max-width: 800px;
+            display: flex;
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+            position: relative;
+            max-height: 90vh;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 1px solid var(--color-coyote);
+            background: var(--color-beige);
+            color: var(--color-coyote);
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: 0.2s;
+            z-index: 10;
+        }
+
+        .modal-close:hover {
+            background: var(--color-coyote);
+            color: var(--color-platinum);
+        }
+        
+        .modal-img-col {
+            flex: 1;
+            min-height: 350px;
+            background: var(--color-beige);
+        }
+
+        .modal-img-col img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .modal-info-col {
+            flex: 1;
+            padding: 40px 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            overflow-y: auto;
+        }
+
+        .modal-info-col h2 {
+            font-size: 2.2rem;
+            color: var(--color-coyote);
+            margin-bottom: 5px;
+            line-height: 1.1;
+        }
+
+        .modal-info-col .cat {
+            color: var(--color-moss);
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .specs-list {
+            list-style: none;
+            margin-top: 10px;
+        }
+
+        .specs-list li {
+            font-size: 1.1rem;
+            margin-bottom: 12px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--color-sage);
+        }
+
+        .specs-list li strong {
+            color: var(--color-moss);
+        }
+
+        /* ESTADOS VACÍOS */
+        .empty-state {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 50px 20px;
+            font-size: 1.5rem;
+            color: var(--color-coyote);
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .modal-box {
+                flex-direction: column;
+                overflow-y: auto;
+            }
+            .modal-img-col {
+                min-height: 250px;
+                flex: none;
+            }
+            .control-input {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <img src="WhatsApp Image 2026-07-26 at 17.42.26.jpeg" alt="Relicarios Logo Oficial" class="logo">
+        <h1>Catálogo de Productos</h1>
+    </header>
+
+    <main>
+        <div class="controls-wrapper">
+            <input type="text" id="searchInput" class="control-input" placeholder="Buscar por código o nombre...">
+            
+            <select id="categoryFilter" class="control-input">
+                <option value="all">Todas las Categorías</option>
+                <option value="Ánforas Premium">Ánforas Premium</option>
+                <option value="Ánforas Clásicas">Ánforas Clásicas</option>
+                <option value="Ánforas Tealight">Ánforas Tealight</option>
+                <option value="Ánforas Mini">Ánforas Mini</option>
+                <option value="Ánforas Ecológicas">Ánforas Ecológicas</option>
+                <option value="Joyas Funerarias">Joyas Funerarias</option>
+            </select>
+        </div>
+
+        <div class="catalog-container" id="catalogGrid">
+            <!-- Renderizado JS -->
+        </div>
+    </main>
+
+    <!-- MODAL DE DETALLE -->
+    <div class="modal-overlay" id="modalOverlay" onclick="closeModal()">
+        <div class="modal-box" onclick="event.stopPropagation()">
+            <button class="modal-close" onclick="closeModal()">✕</button>
+            
+            <div class="modal-img-col">
+                <img id="modalImg" src="" alt="Producto">
+            </div>
+            
+            <div class="modal-info-col">
+                <span class="cat" id="modalCat">Categoría</span>
+                <h2 id="modalTitle">Código Producto</h2>
+                
+                <ul class="specs-list" id="modalSpecs">
+                    <!-- Dinámico -->
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ========================================================
+        // BASE DE DATOS DE PRODUCTOS EXTRAÍDA DEL PDF
+        // ========================================================
+        const imgPlaceholder = (texto) => `https://placehold.co/400x500/DADDD8/84765C?text=${texto.replace(/ /g, '+')}&font=playfair-display`;
+
+        const productos = [
+            // ÁNFORAS PREMIUM
+            { id: "A01", nombre: "Ánfora A01", categoria: "Ánforas Premium", material: "Brass", dimensiones: "20 cm x 15 cm aprox.", capacidad: "3 kg aprox.", peso: "2.175 kg", imagen: imgPlaceholder("A01") },
+            { id: "A27", nombre: "Ánfora A27", categoria: "Ánforas Premium", material: "Brass", dimensiones: "25 cm x 13 cm aprox.", capacidad: "3 kg aprox.", peso: "1.725 kg", imagen: imgPlaceholder("A27") },
+            { id: "A03", nombre: "Ánfora A03", categoria: "Ánforas Premium", material: "Brass", dimensiones: "22 cm x 16 cm aprox.", capacidad: "3 kg aprox.", peso: "2.109 kg", imagen: imgPlaceholder("A03") },
+            { id: "A04", nombre: "Ánfora A04", categoria: "Ánforas Premium", material: "Brass", dimensiones: "27 cm x 16 cm aprox.", capacidad: "3 kg aprox.", peso: "1.809 kg", imagen: imgPlaceholder("A04") },
+            { id: "A05", nombre: "Ánfora A05", categoria: "Ánforas Premium", material: "Brass", dimensiones: "27 cm x 16 cm aprox.", capacidad: "3 kg aprox.", peso: "2.308 kg", imagen: imgPlaceholder("A05") },
+            { id: "A06", nombre: "Ánfora A06", categoria: "Ánforas Premium", material: "Brass", dimensiones: "23 cm x 16 cm aprox.", capacidad: "3 kg aprox.", peso: "2.250 kg", imagen: imgPlaceholder("A06") },
+            { id: "A07", nombre: "Ánfora A07", categoria: "Ánforas Premium", material: "Aluminio", dimensiones: "25 cm x 13 cm aprox.", capacidad: "3.3 kg aprox.", peso: "1.405 kg", imagen: imgPlaceholder("A07") },
+            
+            // ÁNFORAS CLÁSICAS
+            { id: "A24", nombre: "Ánfora A24", categoria: "Ánforas Clásicas", material: "Brass", dimensiones: "7 cm x 16 cm aprox.", capacidad: "3 kg aprox.", peso: "1.691 kg", imagen: imgPlaceholder("A24") },
+            { id: "A23", nombre: "Ánfora A23", categoria: "Ánforas Clásicas", material: "Brass", dimensiones: "23 cm x 16 cm aprox.", capacidad: "3.5 kg aprox.", peso: "2.551 kg", imagen: imgPlaceholder("A23") },
+            
+            // ÁNFORAS TEALIGHT
+            { id: "A10", nombre: "Tealight A10", categoria: "Ánforas Tealight", material: "Brass", dimensiones: "13.5 cm x 9.5 cm aprox.", capacidad: "400 grs aprox.", peso: "1.075 kg / con vaso 1.150 kg", imagen: imgPlaceholder("A10") },
+            { id: "A11", nombre: "Tealight A11", categoria: "Ánforas Tealight", material: "Brass", dimensiones: "13.5 cm x 9.5 cm aprox.", capacidad: "400 grs aprox.", peso: "1.075 kg / con vaso 1.150 kg", imagen: imgPlaceholder("A11") },
+            { id: "A25", nombre: "Tealight A25", categoria: "Ánforas Tealight", material: "Brass y nácar", dimensiones: "13.5 cm x 9.5 cm aprox.", capacidad: "400 grs aprox.", peso: "1.162 kg / con vaso 1.235 kg", imagen: imgPlaceholder("A25") },
+            { id: "A09", nombre: "Tealight A09", categoria: "Ánforas Tealight", material: "Brass", dimensiones: "12 cm x 13 cm aprox.", capacidad: "12 kg aprox.", peso: "1.066 kg", imagen: imgPlaceholder("A09") },
+            { id: "A34", nombre: "Tealight A34", categoria: "Ánforas Tealight", material: "Brass", dimensiones: "13.5 cm x 9.5 cm aprox.", capacidad: "610 grs aprox.", peso: "610 grs", imagen: imgPlaceholder("A34") },
+            { id: "A32", nombre: "Tealight A32", categoria: "Ánforas Tealight", material: "Brass", dimensiones: "12 cm diámetro x 20 cm alto", capacidad: "1.400 kg aprox.", peso: "1.400 kg / con vaso 1.481 kg", imagen: imgPlaceholder("A32") },
+            { id: "W01", nombre: "Urna W01", categoria: "Ánforas Tealight", material: "Madera y aluminio", dimensiones: "16 cm x 115 cm x 9 cm alto", capacidad: "650 grs aprox.", peso: "985 grs", imagen: imgPlaceholder("W01") },
+            { id: "A29", nombre: "Tealight A29", categoria: "Ánforas Tealight", material: "Brass", dimensiones: "13.5 cm x 9.5 cm aprox.", capacidad: "300 grs aprox.", peso: "690 grs / con vaso 771 grs", imagen: imgPlaceholder("A29") },
+            { id: "A31", nombre: "Tealight A31", categoria: "Ánforas Tealight", material: "Brass", dimensiones: "13.5 cm x 9.5 cm aprox.", capacidad: "300 grs aprox.", peso: "690 grs / con vaso 771 grs", imagen: imgPlaceholder("A31") },
+            { id: "A30", nombre: "Tealight A30", categoria: "Ánforas Tealight", material: "Brass", dimensiones: "13.5 cm x 9.5 cm aprox.", capacidad: "400 grs aprox.", peso: "1.016 kg / con vaso 1.098 kg", imagen: imgPlaceholder("A30") },
+
+            // ÁNFORAS MINI
+            { id: "A37", nombre: "Mini A37", categoria: "Ánforas Mini", material: "Brass", dimensiones: "8 cm x 8 cm aprox.", capacidad: "100 grs aprox.", peso: "228 grs / con pedestal 286 grs", imagen: imgPlaceholder("A37") },
+            { id: "A36", nombre: "Mini A36", categoria: "Ánforas Mini", material: "Brass", dimensiones: "8 cm x 8 cm aprox.", capacidad: "100 grs aprox.", peso: "258 grs / con pedestal 316 grs", imagen: imgPlaceholder("A36") },
+            { id: "A35", nombre: "Mini A35", categoria: "Ánforas Mini", material: "Brass", dimensiones: "8 cm x 8 cm aprox.", capacidad: "100 grs aprox.", peso: "228 grs / con pedestal 286 grs", imagen: imgPlaceholder("A35") },
+            { id: "A26", nombre: "Mini A26", categoria: "Ánforas Mini", material: "Brass", dimensiones: "8 cm x 8 cm aprox.", capacidad: "100 grs aprox.", peso: "235 grs / con pedestal 293 grs", imagen: imgPlaceholder("A26") },
+            { id: "A16", nombre: "Mini A16", categoria: "Ánforas Mini", material: "Brass", dimensiones: "8 cm x 8 cm aprox.", capacidad: "100 grs aprox.", peso: "140 grs", imagen: imgPlaceholder("A16") },
+            { id: "A15", nombre: "Mini A15", categoria: "Ánforas Mini", material: "Acero", dimensiones: "45 cm x 4 cm aprox.", capacidad: "25 grs aprox.", peso: "140 grs", extras: "Reparto", imagen: imgPlaceholder("A15") },
+            { id: "A13", nombre: "Mini A13", categoria: "Ánforas Mini", material: "Brass", dimensiones: "45 cm x 8 cm aprox.", capacidad: "50 grs aprox.", peso: "129 grs", extras: "Reparto", imagen: imgPlaceholder("A13") },
+            { id: "A38", nombre: "Mini A38", categoria: "Ánforas Mini", material: "Brass", dimensiones: "45 cm x 8 cm aprox.", capacidad: "50 grs aprox.", peso: "131 grs", extras: "Reparto", imagen: imgPlaceholder("A38") },
+            { id: "A28", nombre: "Mini A28", categoria: "Ánforas Mini", material: "Brass y nácar", dimensiones: "4.5 cm x 8 cm aprox.", capacidad: "50 grs aprox.", peso: "131 grs", extras: "Reparto", imagen: imgPlaceholder("A28") },
+            { id: "A33", nombre: "Mini A33", categoria: "Ánforas Mini", material: "Brass", dimensiones: "45 cm x 8 cm aprox.", capacidad: "50 grs aprox.", peso: "120 grs", extras: "Reparto", imagen: imgPlaceholder("A33") },
+
+            // ÁNFORAS ECOLÓGICAS
+            { id: "GEOS", nombre: "Geos", categoria: "Ánforas Ecológicas", material: "Tierra, coco y aglomerantes", dimensiones: "22 cm diámetro aprox.", capacidad: "500 grs aprox.", peso: "2.275 kg", extras: "Para sepultar en la tierra o despedida en el agua", imagen: imgPlaceholder("GEOS") },
+            { id: "MARE", nombre: "Mare", categoria: "Ánforas Ecológicas", material: "Sal y aglomerantes", dimensiones: "22 cm diámetro aprox.", capacidad: "500 grs aprox.", peso: "1.717 kg", extras: "Para sepultar en la tierra o despedida en el agua", imagen: imgPlaceholder("MARE") },
+
+            // JOYAS FUNERARIAS
+            { id: "C00", nombre: "Rectángulo", categoria: "Joyas Funerarias", material: "Acero inoxidable", dimensiones: "0.5 cm x 2.8 cm", peso: "6.65 grs", extras: "Incluye cadena y caja. A prueba de agua, hipoalergénicas.", imagen: imgPlaceholder("C00") },
+            { id: "C01", nombre: "Rectángulo L", categoria: "Joyas Funerarias", material: "Acero inoxidable", dimensiones: "0.5 cm x 4.4 cm", peso: "5.54 grs", extras: "Incluye cadena y caja. A prueba de agua, hipoalergénicas.", imagen: imgPlaceholder("C01") },
+            { id: "C02", nombre: "Infinito", categoria: "Joyas Funerarias", material: "Acero inoxidable", dimensiones: "0.5 cm x 2.8 cm", peso: "3.52 grs", extras: "Incluye cadena y caja. A prueba de agua, hipoalergénicas.", imagen: imgPlaceholder("C02") },
+            { id: "C03", nombre: "Corazón Ancho", categoria: "Joyas Funerarias", material: "Acero inoxidable", dimensiones: "2 cm x 2 cm", peso: "9.21 grs", extras: "Incluye cadena y caja. A prueba de agua, hipoalergénicas.", imagen: imgPlaceholder("C03") },
+            { id: "C04", nombre: "Corazón Largo", categoria: "Joyas Funerarias", material: "Acero inoxidable", dimensiones: "2 cm x 2.3 cm", peso: "13.07 grs", extras: "Incluye cadena y caja. A prueba de agua, hipoalergénicas.", imagen: imgPlaceholder("C04") },
+            { id: "C05", nombre: "Árbol de la vida", categoria: "Joyas Funerarias", material: "Acero inoxidable", dimensiones: "2.3 cm x 2.3 cm", peso: "7.01 grs", extras: "Incluye cadena y caja. A prueba de agua, hipoalergénicas.", imagen: imgPlaceholder("C05") },
+            { id: "C06", nombre: "Corazón Vidriado", categoria: "Joyas Funerarias", material: "Acero inoxidable", dimensiones: "1.2 cm x 1.2 cm", peso: "4.75 grs", extras: "Incluye cadena y caja. A prueba de agua, hipoalergénicas.", imagen: imgPlaceholder("C06") },
+            { id: "C08", nombre: "Embudo", categoria: "Joyas Funerarias", material: "Acero inoxidable", dimensiones: "1 cm x 1.9 cm", peso: "7.31 grs", extras: "Incluye cadena y caja. A prueba de agua, hipoalergénicas.", imagen: imgPlaceholder("C08") },
+            { id: "C09", nombre: "Cruz", categoria: "Joyas Funerarias", material: "Acero inoxidable", dimensiones: "2 cm x 3 cm", peso: "10.54 grs", extras: "Incluye cadena y caja. A prueba de agua, hipoalergénicas.", imagen: imgPlaceholder("C09") },
+            { id: "C18", nombre: "Lágrima", categoria: "Joyas Funerarias", material: "Acero inoxidable", dimensiones: "1 cm x 1.8 cm", peso: "8.90 grs", extras: "Incluye cadena y caja. A prueba de agua, hipoalergénicas.", imagen: imgPlaceholder("C18") },
+            { id: "C19", nombre: "Corazón Chico", categoria: "Joyas Funerarias", material: "Acero inoxidable", dimensiones: "1 cm x 1.2 cm", peso: "3.71 grs", extras: "Incluye cadena y caja. A prueba de agua, hipoalergénicas.", imagen: imgPlaceholder("C19") },
+            { id: "C25", nombre: "Cubo Brillante", categoria: "Joyas Funerarias", material: "Acero inoxidable", dimensiones: "1.1 cm x 1.1 cm", peso: "10.23 grs", extras: "Incluye cadena y caja. A prueba de agua, hipoalergénicas.", imagen: imgPlaceholder("C25") },
+            { id: "C26", nombre: "Cola de Ballena", categoria: "Joyas Funerarias", material: "Acero inoxidable", dimensiones: "2.5 cm x 3 cm", peso: "10.31 grs", extras: "Incluye cadena y caja. A prueba de agua, hipoalergénicas.", imagen: imgPlaceholder("C26") },
+            { id: "C30", nombre: "Luna", categoria: "Joyas Funerarias", material: "Acero inoxidable", dimensiones: "2 cm x 1.5 cm", peso: "6.10 grs", extras: "Incluye cadena y caja. A prueba de agua, hipoalergénicas.", imagen: imgPlaceholder("C30") },
+            { id: "C31", nombre: "Estrella", categoria: "Joyas Funerarias", material: "Acero inoxidable", dimensiones: "1.8 cm x 1.8 cm", peso: "3.81 grs", extras: "Incluye cadena y caja. A prueba de agua, hipoalergénicas.", imagen: imgPlaceholder("C31") },
+            { id: "C32", nombre: "Brújula", categoria: "Joyas Funerarias", material: "Acero inoxidable", dimensiones: "0.8 cm x 1.2 cm", peso: "3.00 grs", extras: "Incluye cadena y caja. A prueba de agua, hipoalergénicas.", imagen: imgPlaceholder("C32") }
+        ];
+
+        const grid = document.getElementById('catalogGrid');
+        const searchInput = document.getElementById('searchInput');
+        const categoryFilter = document.getElementById('categoryFilter');
+
+        // Renderizar las tarjetas
+        function renderizarCatalogo() {
+            grid.innerHTML = '';
+            
+            const query = searchInput.value.toLowerCase();
+            const cat = categoryFilter.value;
+
+            const filtrados = productos.filter(p => {
+                const matchTexto = p.nombre.toLowerCase().includes(query) || p.id.toLowerCase().includes(query);
+                const matchCategoria = (cat === 'all') || (p.categoria === cat);
+                return matchTexto && matchCategoria;
+            });
+
+            if (filtrados.length === 0) {
+                grid.innerHTML = `<div class="empty-state">No hemos encontrado productos que coincidan con tu búsqueda.</div>`;
+                return;
+            }
+
+            filtrados.forEach(p => {
+                const card = document.createElement('div');
+                card.className = 'product-card';
+                card.onclick = () => showModal(p);
+                
+                card.innerHTML = `
+                    <div class="card-image">
+                        <img src="${p.imagen}" alt="${p.nombre}">
+                    </div>
+                    <div class="card-content">
+                        <div class="card-category">${p.categoria}</div>
+                        <h2 class="card-title">${p.nombre} (${p.id})</h2>
+                        <div class="card-details">
+                            <strong>Material:</strong> ${p.material}<br>
+                            ${p.capacidad ? `<strong>Capacidad:</strong> ${p.capacidad}` : ''}
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // Lógica del Modal
+        function showModal(p) {
+            document.getElementById('modalImg').src = p.imagen;
+            document.getElementById('modalCat').textContent = p.categoria;
+            document.getElementById('modalTitle').textContent = `${p.nombre} - ${p.id}`;
+            
+            const specsList = document.getElementById('modalSpecs');
+            specsList.innerHTML = `
+                <li><strong>Material:</strong> ${p.material}</li>
+                <li><strong>Dimensiones:</strong> ${p.dimensiones}</li>
+                ${p.capacidad ? `<li><strong>Capacidad:</strong> ${p.capacidad}</li>` : ''}
+                <li><strong>Peso:</strong> ${p.peso}</li>
+                ${p.extras ? `<li><strong>Detalles extra:</strong> ${p.extras}</li>` : ''}
+            `;
+            
+            document.getElementById('modalOverlay').classList.add('open');
+        }
+
+        function closeModal() { 
+            document.getElementById('modalOverlay').classList.remove('open'); 
+        }
+
+        // Eventos
+        searchInput.addEventListener('input', renderizarCatalogo);
+        categoryFilter.addEventListener('change', renderizarCatalogo);
+
+        // Inicializar
+        renderizarCatalogo();
+    </script>
+</body>
+</html>
