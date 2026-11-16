@@ -1,502 +1,203 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Catálogo Oficial - Relicarios</title>
-    <style>
-        /* ========================================================
-           TIPOGRAFÍA CATCHY MAGER
-           ======================================================== */
-        @font-face {
-            font-family: 'Catchy Mager';
-            src: local('Catchy Mager Regular'), local('CatchyMager-Normal');
-            font-weight: normal;
-            font-style: normal;
-        }
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Costos, presupuestos operativos y proyecto de seguridad 2026 - 2027</title>
+<style>
+:root{--red:#ED1C24;--ink:#26282b;--grey:#8c8e93;--soft:#f3f3f4;--line:#dcdde0;--bg:#fff;--navy:#1f3864;--ok:#1f7a4d;--bad:#c0262d}
+*{box-sizing:border-box;margin:0}
+html{scroll-snap-type:y mandatory;scroll-behavior:smooth}
+body{font-family:"Segoe UI",Calibri,Arial,sans-serif;color:var(--ink);background:#e9e9ea}
+.slide{min-height:100vh;scroll-snap-align:start;background:var(--bg);position:relative;padding:44px 6vw 64px;display:flex;flex-direction:column;justify-content:center;border-bottom:6px solid #e9e9ea;overflow:hidden}
+.slide::before{content:"";position:absolute;top:0;left:0;right:0;height:14px;background:linear-gradient(90deg,var(--grey) 0 82%,var(--red) 82%)}
+.logo{position:absolute;top:30px;right:6vw;background:var(--red);color:#fff;font-weight:800;font-size:15px;padding:6px 10px;border-radius:2px}
+.pg{position:absolute;bottom:18px;right:6vw;color:var(--grey);font-size:13px}
+h1{font-size:clamp(30px,6vw,60px);line-height:1.08;max-width:15em;letter-spacing:-.5px}
+.sub{margin-top:18px;font-size:clamp(17px,2.4vw,26px);color:#505257}
+.meta{margin-top:44px;font-size:14px;line-height:1.7;color:#505257;border-left:4px solid var(--red);padding-left:14px}
+h2{font-size:clamp(24px,3.6vw,38px);margin:14px 0 4px}
+.lead{color:#505257;font-size:clamp(14px,1.7vw,18px);margin-bottom:20px}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:start}
+.kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:18px}
+.kpi{background:var(--soft);border-top:4px solid var(--navy);padding:12px 14px}
+.kpi b{display:block;font-size:clamp(18px,2.8vw,30px)}
+.kpi span{font-size:13px;color:#505257}
+.kpi.r{border-color:var(--red)}
+table{width:100%;border-collapse:collapse;font-size:clamp(12px,1.35vw,15px)}
+th{background:var(--navy);color:#fff;text-align:left;padding:7px 9px;font-weight:600}
+td{padding:6px 9px;border-bottom:1px solid var(--line)}
+td.n,th.n{text-align:right;white-space:nowrap}
+tr.t td{background:#dfe7f3;font-weight:700}
+.up{color:var(--bad)}.dn{color:var(--ok)}
+ul{padding-left:18px;font-size:clamp(13px,1.5vw,16px);line-height:1.55}
+li{margin-bottom:6px}
+.note{margin-top:14px;font-size:13px;color:#505257;background:#fdecec;border-left:4px solid var(--red);padding:8px 12px}
 
-        /* ========================================================
-           PALETA DE COLORES OFICIAL
-           ======================================================== */
-        :root {
-            --color-platinum: #DADDD8;
-            --color-beige: #D0D8BA;       /* FONDO PRINCIPAL */
-            --color-sage: #A6A277;
-            --color-moss: #919063;
-            --color-coyote: #84765C;      /* TEXTOS Y TÍTULOS */
-            
-            --radius-card: 16px;
-            --shadow-subtle: 0 4px 15px rgba(132, 118, 92, 0.15);
-            --shadow-hover: 0 8px 25px rgba(145, 144, 99, 0.3);
-        }
+/* Botón estilo Sheets / Excel */
+.excel-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 24px;
+  padding: 10px 18px;
+  background: var(--ok);
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+  border-radius: 4px;
+  font-size: 14px;
+  width: fit-content;
+  transition: opacity 0.2s;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+.excel-btn:hover { opacity: 0.85; }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        body {
-            font-family: 'Catchy Mager', serif; 
-            background-color: var(--color-beige);
-            color: var(--color-coyote);
-            line-height: 1.6;
-            min-height: 100vh;
-        }
-
-        /* HEADER & LOGO */
-        header {
-            text-align: center;
-            padding: 40px 20px 20px;
-            background-color: var(--color-platinum);
-            border-bottom: 2px solid var(--color-sage);
-            box-shadow: var(--shadow-subtle);
-        }
-
-        .logo {
-            max-width: 220px;
-            height: auto;
-            margin-bottom: 10px;
-            mix-blend-mode: multiply;
-        }
-
-        h1 {
-            font-size: 2.5rem;
-            font-weight: normal;
-            color: var(--color-coyote);
-            letter-spacing: 2px;
-        }
-
-        /* BARRA DE CONTROLES */
-        .controls-wrapper {
-            max-width: 1200px;
-            margin: 30px auto;
-            padding: 0 20px;
-            display: flex;
-            gap: 15px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .control-input {
-            font-family: 'Catchy Mager', serif;
-            font-size: 1.1rem;
-            padding: 12px 20px;
-            border: 2px solid var(--color-sage);
-            border-radius: 30px;
-            background-color: var(--color-platinum);
-            color: var(--color-coyote);
-            outline: none;
-            min-width: 250px;
-            transition: border-color 0.3s ease;
-        }
-
-        .control-input:focus {
-            border-color: var(--color-moss);
-        }
-
-        .control-input::placeholder {
-            color: var(--color-sage);
-        }
-
-        /* GRILLA DE PRODUCTOS */
-        .catalog-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 30px;
-            padding-bottom: 80px;
-        }
-
-        .product-card {
-            background-color: var(--color-platinum);
-            border-radius: var(--radius-card);
-            overflow: hidden;
-            box-shadow: var(--shadow-subtle);
-            transition: all 0.3s ease;
-            cursor: pointer;
-            border: 1px solid transparent;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .product-card:hover {
-            transform: translateY(-8px);
-            box-shadow: var(--shadow-hover);
-            border-color: var(--color-sage);
-        }
-
-        .card-image {
-            width: 100%;
-            height: 250px;
-            background-color: #f5f5f5;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .card-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.5s ease;
-        }
-
-        .product-card:hover .card-image img {
-            transform: scale(1.05);
-        }
-
-        .card-content {
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            flex-grow: 1;
-            text-align: center;
-        }
-
-        .card-category {
-            font-size: 0.9rem;
-            color: var(--color-moss);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 5px;
-        }
-
-        .card-title {
-            font-size: 1.5rem;
-            color: var(--color-coyote);
-            margin-bottom: 10px;
-        }
-
-        .card-details {
-            font-size: 1rem;
-            color: var(--color-coyote);
-            margin-top: auto;
-            background: rgba(166, 162, 119, 0.15);
-            padding: 10px;
-            border-radius: 8px;
-            border: 1px dashed var(--color-sage);
-        }
-
-        /* MODAL DE DETALLE */
-        .modal-overlay {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background: rgba(132, 118, 92, 0.8);
-            backdrop-filter: blur(5px);
-            z-index: 2000;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
-
-        .modal-overlay.open {
-            display: flex;
-        }
-
-        .modal-box {
-            background: var(--color-platinum);
-            border: 2px solid var(--color-sage);
-            border-radius: 20px;
-            width: 100%;
-            max-width: 800px;
-            display: flex;
-            overflow: hidden;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.4);
-            position: relative;
-            max-height: 90vh;
-        }
-
-        .modal-close {
-            position: absolute;
-            top: 16px;
-            right: 16px;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            border: 1px solid var(--color-coyote);
-            background: var(--color-beige);
-            color: var(--color-coyote);
-            font-size: 1.2rem;
-            cursor: pointer;
-            transition: 0.2s;
-            z-index: 10;
-        }
-
-        .modal-close:hover {
-            background: var(--color-coyote);
-            color: var(--color-platinum);
-        }
-        
-        .modal-img-col {
-            flex: 1;
-            min-height: 350px;
-            background: var(--color-beige);
-        }
-
-        .modal-img-col img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        
-        .modal-info-col {
-            flex: 1;
-            padding: 40px 30px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            overflow-y: auto;
-        }
-
-        .modal-info-col h2 {
-            font-size: 2.2rem;
-            color: var(--color-coyote);
-            margin-bottom: 5px;
-            line-height: 1.1;
-        }
-
-        .modal-info-col .cat {
-            color: var(--color-moss);
-            text-transform: uppercase;
-            font-size: 0.9rem;
-            letter-spacing: 2px;
-            margin-bottom: 20px;
-            display: block;
-        }
-
-        .specs-list {
-            list-style: none;
-            margin-top: 10px;
-        }
-
-        .specs-list li {
-            font-size: 1.1rem;
-            margin-bottom: 12px;
-            padding-bottom: 8px;
-            border-bottom: 1px solid var(--color-sage);
-        }
-
-        .specs-list li strong {
-            color: var(--color-moss);
-        }
-
-        /* ESTADOS VACÍOS */
-        .empty-state {
-            grid-column: 1 / -1;
-            text-align: center;
-            padding: 50px 20px;
-            font-size: 1.5rem;
-            color: var(--color-coyote);
-        }
-
-        /* RESPONSIVE */
-        @media (max-width: 768px) {
-            .modal-box {
-                flex-direction: column;
-                overflow-y: auto;
-            }
-            .modal-img-col {
-                min-height: 250px;
-                flex: none;
-            }
-            .control-input {
-                width: 100%;
-            }
-        }
-    </style>
+nav{position:fixed;bottom:12px;left:50%;transform:translateX(-50%);display:flex;gap:8px;z-index:9}
+nav button{border:0;background:var(--ink);color:#fff;width:42px;height:34px;border-radius:17px;font-size:16px;cursor:pointer}
+nav button:focus-visible{outline:3px solid var(--red);outline-offset:2px}
+@media(max-width:760px){.cols{grid-template-columns:1fr}.kpis{grid-template-columns:1fr 1fr}.slide{padding-top:56px}.logo{font-size:13px}}
+@media print{.slide{page-break-after:always;min-height:auto;height:100vh}nav{display:none} .excel-btn{display:none}}
+</style>
 </head>
 <body>
 
-    <header>
-        <img src="WhatsApp Image 2026-07-26 at 17.42.26.jpeg" alt="Relicarios Logo Oficial" class="logo">
-        <h1>Catálogo de Productos</h1>
-    </header>
+<section class="slide">
+  <div class="logo">inacap</div>
+  <h1>Costos, presupuestos operativos y proyecto de seguridad 2026 - 2027</h1>
+  <p class="sub">Caso Transportes Logísticos SpA (División Blindados)</p>
+  <div class="meta">Costos aplicados a la Logística · Sección LOCL03<br>Natali Vázquez, Anais Ramírez, Diego Ibarra<br>Docente: Zully Gabriela Garrido Almodóvar</div>
+  <span class="pg">1 / 4</span>
+</section>
 
-    <main>
-        <div class="controls-wrapper">
-            <input type="text" id="searchInput" class="control-input" placeholder="Buscar por código o nombre...">
-            
-            <select id="categoryFilter" class="control-input">
-                <option value="all">Todas las Categorías</option>
-                <option value="Ánforas Premium">Ánforas Premium</option>
-                <option value="Ánforas Clásicas">Ánforas Clásicas</option>
-                <option value="Ánforas Tealight">Ánforas Tealight</option>
-                <option value="Ánforas Mini">Ánforas Mini</option>
-                <option value="Ánforas Ecológicas">Ánforas Ecológicas</option>
-                <option value="Joyas Funerarias">Joyas Funerarias</option>
-            </select>
-        </div>
+<section class="slide">
+  <div class="logo">inacap</div>
+  <h2>Hoja 1: Control de operaciones 2026</h2>
+  <p class="lead">Presupuesto vs. gasto real mensual de 38 ítems en 6 categorías. Desviación = Real − Presupuesto.</p>
+  <div class="kpis">
+    <div class="kpi"><b>$819.600.000</b><span>Presupuesto 2026</span></div>
+    <div class="kpi"><b>$818.901.661</b><span>Real 2026</span></div>
+    <div class="kpi r"><b>−$698.339 (−0,09 %)</b><span>Desviación total (ahorro)</span></div>
+  </div>
+  <div class="cols">
+    <table>
+      <tr><th>Categoría</th><th class="n">Desviación</th></tr>
+      <tr><td>Operación y Ruta</td><td class="n dn">−301.873 (−0,15 %)</td></tr>
+      <tr><td>Mantenimiento de Flota</td><td class="n up">+200.791 (+0,35 %)</td></tr>
+      <tr><td>Recursos Humanos</td><td class="n dn">−703.348 (−0,18 %)</td></tr>
+      <tr><td>Seguros y Riesgos</td><td class="n dn">−211.955 (−0,17 %)</td></tr>
+      <tr><td>Seguridad Táctica</td><td class="n up">+319.521 (+1,18 %)</td></tr>
+      <tr><td>Tecnología y Comunic.</td><td class="n dn">−1.475 (0,00 %)</td></tr>
+    </table>
+    <ul>
+      <li><b>17 ítems</b> se sobregiraron (+921.587), <b>11</b> ahorraron (−1.619.926) y <b>10</b> cumplieron exacto.</li>
+      <li>Mayor sobregiro: Mantenimiento Preventivo <b>+259.260</b> (adelanto de pautas de 100.000 km).</li>
+      <li>Le siguen Armamento <b>+171.426</b> (alza del USD) y Capacitación OS-10 <b>+106.010</b>.</li>
+      <li>Mayores ahorros: Combustible <b>−356.249</b> y Horas Extras Choferes <b>−355.175</b>.</li>
+      <li>Los 10 ítems exactos son de monto fijo: sueldos base, seguros de flota y de vida, GPS, anti-jammer, sellos y radios.</li>
+    </ul>
+  </div>
+  
+  <a href="https://docs.google.com/spreadsheets/d/1IWZ2MUBKZfMa6nzFNlZZD0WEcVidSq5y/edit?gid=190427370#gid=190427370" target="_blank" class="excel-btn">
+    <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M4 3C2.89 3 2 3.89 2 5V19C2 20.11 2.89 21 4 21H20C21.11 21 22 20.11 22 19V5C22 3.89 21.11 3 20 3H4ZM20 19H4V5H20V19ZM8 7H19V9H8V7ZM8 11H19V13H8V11ZM8 15H19V17H8V15ZM5 7H7V9H5V7ZM5 11H7V13H5V11ZM5 15H7V17H5V15Z"/></svg>
+    Abrir Hoja 1
+  </a>
+  
+  <span class="pg">2 / 4</span>
+</section>
 
-        <div class="catalog-container" id="catalogGrid">
-            <!-- Renderizado JS -->
-        </div>
-    </main>
+<section class="slide">
+  <div class="logo">inacap</div>
+  <h2>Hoja 2: Presupuesto de operaciones 2027</h2>
+  <p class="lead">Modelo dual: Base Cero (ZBB) +6,5 % en costos variables e incremental +4,5 % en costos fijos.</p>
+  <div class="kpis">
+    <div class="kpi"><b>$863.307.526</b><span>Presupuesto 2027</span></div>
+    <div class="kpi r"><b>+5,4 %</b><span>Sobre el real 2026</span></div>
+    <div class="kpi"><b>6,5 % / 4,5 %</b><span>Factor ZBB / incremental</span></div>
+  </div>
+  <div class="cols">
+    <table>
+      <tr><th>Categoría</th><th class="n">Ppto 2027</th><th class="n">Var.</th></tr>
+      <tr><td>Operación y Ruta</td><td class="n">211.943.988</td><td class="n">+6,6 %</td></tr>
+      <tr><td>Mantenimiento</td><td class="n">61.983.000</td><td class="n">+6,1 %</td></tr>
+      <tr><td>Recursos Humanos</td><td class="n">402.296.988</td><td class="n">+5,1 %</td></tr>
+      <tr><td>Seguros y Riesgos</td><td class="n">126.653.964</td><td class="n">+4,7 %</td></tr>
+      <tr><td>Seguridad Táctica</td><td class="n">28.430.998</td><td class="n">+4,1 %</td></tr>
+      <tr><td>Tecnología y Comunic.</td><td class="n">31.998.588</td><td class="n">+4,6 %</td></tr>
+      <tr class="t"><td>Total</td><td class="n">863.307.526</td><td class="n">+5,4 %</td></tr>
+    </table>
+    <ul>
+      <li><b>Costos fijos</b> (arriendos, sueldos base, seguros): incremental +4,5 % por IPC y paritarias.</li>
+      <li><b>Costos variables</b> (combustible, peajes, reparaciones, viáticos): ZBB +6,5 %, según el volumen de kilómetros y las tarifas proyectadas.</li>
+      <li>Ejemplo: el diésel pasa de $12.450.000 a $13.259.250 mensuales ($159.111.000 al año).</li>
+      <li>Cuotas mensuales iguales, salvo la compra de armamento (marzo y septiembre).</li>
+      <li>El modelo dual evita reservas de holgura artificiales.</li>
+    </ul>
+  </div>
+  
+  <a href="https://docs.google.com/spreadsheets/d/1IWZ2MUBKZfMa6nzFNlZZD0WEcVidSq5y/edit?gid=1863288816#gid=1863288816" target="_blank" class="excel-btn">
+    <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M4 3C2.89 3 2 3.89 2 5V19C2 20.11 2.89 21 4 21H20C21.11 21 22 20.11 22 19V5C22 3.89 21.11 3 20 3H4ZM20 19H4V5H20V19ZM8 7H19V9H8V7ZM8 11H19V13H8V11ZM8 15H19V17H8V15ZM5 7H7V9H5V7ZM5 11H7V13H5V11ZM5 15H7V17H5V15Z"/></svg>
+    Abrir Hoja 2
+  </a>
+  
+  <span class="pg">3 / 4</span>
+</section>
 
-    <!-- MODAL DE DETALLE -->
-    <div class="modal-overlay" id="modalOverlay" onclick="closeModal()">
-        <div class="modal-box" onclick="event.stopPropagation()">
-            <button class="modal-close" onclick="closeModal()">✕</button>
-            
-            <div class="modal-img-col">
-                <img id="modalImg" src="" alt="Producto">
-            </div>
-            
-            <div class="modal-info-col">
-                <span class="cat" id="modalCat">Categoría</span>
-                <h2 id="modalTitle">Código Producto</h2>
-                
-                <ul class="specs-list" id="modalSpecs">
-                    <!-- Dinámico -->
-                </ul>
-            </div>
-        </div>
-    </div>
+<section class="slide">
+  <div class="logo">inacap</div>
+  <h2>Hoja 3: Proyecto de seguridad 2027</h2>
+  <p class="lead">Cámaras con IA, software anti-jammer y hardware CCTV/GPS, en 8 fases entre marzo y octubre de 2027.</p>
+  <div class="kpis">
+    <div class="kpi"><b>$24.150.000</b><span>Presupuesto</span></div>
+    <div class="kpi"><b>$24.950.000</b><span>Real</span></div>
+    <div class="kpi r"><b>+$800.000 (+3,3 %)</b><span>Sobrecosto · 6 de 8 fases cumplidas</span></div>
+  </div>
+  <div class="cols">
+    <table>
+      <tr><th>Fase</th><th>Trim.</th><th class="n">Desv.</th></tr>
+      <tr><td>Diagnóstico de vulnerabilidades</td><td>Q1</td><td class="n">0</td></tr>
+      <tr><td>Licitación CCTV / GPS</td><td>Q2</td><td class="n dn">−150.000</td></tr>
+      <tr><td>Compra kits cámaras IA</td><td>Q2</td><td class="n up">+700.000</td></tr>
+      <tr><td>Software anti-jammer</td><td>Q2</td><td class="n">0</td></tr>
+      <tr><td>Instalación en flota</td><td>Q2</td><td class="n up">+450.000</td></tr>
+      <tr><td>Marcha blanca Ruta 78</td><td>Q3</td><td class="n dn">−200.000</td></tr>
+      <tr><td>Capacitación choferes y escoltas</td><td>Q3</td><td class="n">0</td></tr>
+      <tr><td>Cierre y auditoría</td><td>Q4</td><td class="n">0</td></tr>
+    </table>
+    <ul>
+      <li>Cámaras: <b>+8,2 %</b> por el alza del dólar.</li>
+      <li>Instalación: <b>+12,9 %</b> por horas extras de taller al cablear tractos blindados.</li>
+      <li>Ahorros (−350.000) no compensaron los sobrecostos (+1.150.000).</li>
+      <li>Índice de costo (CPI): <b>0,97</b>.</li>
+      <li>Contingencia cambiaria propuesta: <b>8,5 %</b>. Sobre las cámaras son $722.500, casi todo el sobrecosto de $700.000.</li>
+      <li>Retorno: bajar 10 % las pólizas (más de $110.000.000 al año) ahorraría ~$11.000.000 anuales. <b>Payback: 27 meses.</b></li>
+    </ul>
+  </div>
+  
+  <a href="https://docs.google.com/spreadsheets/d/1IWZ2MUBKZfMa6nzFNlZZD0WEcVidSq5y/edit?gid=2128699098#gid=2128699098" target="_blank" class="excel-btn">
+    <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M4 3C2.89 3 2 3.89 2 5V19C2 20.11 2.89 21 4 21H20C21.11 21 22 20.11 22 19V5C22 3.89 21.11 3 20 3H4ZM20 19H4V5H20V19ZM8 7H19V9H8V7ZM8 11H19V13H8V11ZM8 15H19V17H8V15ZM5 7H7V9H5V7ZM5 11H7V13H5V11ZM5 15H7V17H5V15Z"/></svg>
+    Abrir Hoja 3
+  </a>
+  
+  <span class="pg">4 / 4</span>
+</section>
 
-    <script>
-        // ========================================================
-        // BASE DE DATOS DE PRODUCTOS EXTRAÍDA DEL PDF
-        // ========================================================
-        const imgPlaceholder = (texto) => `https://placehold.co/400x500/DADDD8/84765C?text=${texto.replace(/ /g, '+')}&font=playfair-display`;
-
-        const productos = [
-            // ÁNFORAS PREMIUM
-            { id: "A01", nombre: "Ánfora A01", categoria: "Ánforas Premium", material: "Brass", dimensiones: "20 cm x 15 cm aprox.", capacidad: "3 kg aprox.", peso: "2.175 kg", imagen: imgPlaceholder("A01") },
-            { id: "A27", nombre: "Ánfora A27", categoria: "Ánforas Premium", material: "Brass", dimensiones: "25 cm x 13 cm aprox.", capacidad: "3 kg aprox.", peso: "1.725 kg", imagen: imgPlaceholder("A27") },
-            { id: "A03", nombre: "Ánfora A03", categoria: "Ánforas Premium", material: "Brass", dimensiones: "22 cm x 16 cm aprox.", capacidad: "3 kg aprox.", peso: "2.109 kg", imagen: imgPlaceholder("A03") },
-            { id: "A04", nombre: "Ánfora A04", categoria: "Ánforas Premium", material: "Brass", dimensiones: "27 cm x 16 cm aprox.", capacidad: "3 kg aprox.", peso: "1.809 kg", imagen: imgPlaceholder("A04") },
-            { id: "A05", nombre: "Ánfora A05", categoria: "Ánforas Premium", material: "Brass", dimensiones: "27 cm x 16 cm aprox.", capacidad: "3 kg aprox.", peso: "2.308 kg", imagen: imgPlaceholder("A05") },
-            { id: "A06", nombre: "Ánfora A06", categoria: "Ánforas Premium", material: "Brass", dimensiones: "23 cm x 16 cm aprox.", capacidad: "3 kg aprox.", peso: "2.250 kg", imagen: imgPlaceholder("A06") },
-            { id: "A07", nombre: "Ánfora A07", categoria: "Ánforas Premium", material: "Aluminio", dimensiones: "25 cm x 13 cm aprox.", capacidad: "3.3 kg aprox.", peso: "1.405 kg", imagen: imgPlaceholder("A07") },
-            
-            // ÁNFORAS CLÁSICAS
-            { id: "A24", nombre: "Ánfora A24", categoria: "Ánforas Clásicas", material: "Brass", dimensiones: "7 cm x 16 cm aprox.", capacidad: "3 kg aprox.", peso: "1.691 kg", imagen: imgPlaceholder("A24") },
-            { id: "A23", nombre: "Ánfora A23", categoria: "Ánforas Clásicas", material: "Brass", dimensiones: "23 cm x 16 cm aprox.", capacidad: "3.5 kg aprox.", peso: "2.551 kg", imagen: imgPlaceholder("A23") },
-            
-            // ÁNFORAS TEALIGHT
-            { id: "A10", nombre: "Tealight A10", categoria: "Ánforas Tealight", material: "Brass", dimensiones: "13.5 cm x 9.5 cm aprox.", capacidad: "400 grs aprox.", peso: "1.075 kg / con vaso 1.150 kg", imagen: imgPlaceholder("A10") },
-            { id: "A11", nombre: "Tealight A11", categoria: "Ánforas Tealight", material: "Brass", dimensiones: "13.5 cm x 9.5 cm aprox.", capacidad: "400 grs aprox.", peso: "1.075 kg / con vaso 1.150 kg", imagen: imgPlaceholder("A11") },
-            { id: "A25", nombre: "Tealight A25", categoria: "Ánforas Tealight", material: "Brass y nácar", dimensiones: "13.5 cm x 9.5 cm aprox.", capacidad: "400 grs aprox.", peso: "1.162 kg / con vaso 1.235 kg", imagen: imgPlaceholder("A25") },
-            { id: "A09", nombre: "Tealight A09", categoria: "Ánforas Tealight", material: "Brass", dimensiones: "12 cm x 13 cm aprox.", capacidad: "12 kg aprox.", peso: "1.066 kg", imagen: imgPlaceholder("A09") },
-            { id: "A34", nombre: "Tealight A34", categoria: "Ánforas Tealight", material: "Brass", dimensiones: "13.5 cm x 9.5 cm aprox.", capacidad: "610 grs aprox.", peso: "610 grs", imagen: imgPlaceholder("A34") },
-            { id: "A32", nombre: "Tealight A32", categoria: "Ánforas Tealight", material: "Brass", dimensiones: "12 cm diámetro x 20 cm alto", capacidad: "1.400 kg aprox.", peso: "1.400 kg / con vaso 1.481 kg", imagen: imgPlaceholder("A32") },
-            { id: "W01", nombre: "Urna W01", categoria: "Ánforas Tealight", material: "Madera y aluminio", dimensiones: "16 cm x 115 cm x 9 cm alto", capacidad: "650 grs aprox.", peso: "985 grs", imagen: imgPlaceholder("W01") },
-            { id: "A29", nombre: "Tealight A29", categoria: "Ánforas Tealight", material: "Brass", dimensiones: "13.5 cm x 9.5 cm aprox.", capacidad: "300 grs aprox.", peso: "690 grs / con vaso 771 grs", imagen: imgPlaceholder("A29") },
-            { id: "A31", nombre: "Tealight A31", categoria: "Ánforas Tealight", material: "Brass", dimensiones: "13.5 cm x 9.5 cm aprox.", capacidad: "300 grs aprox.", peso: "690 grs / con vaso 771 grs", imagen: imgPlaceholder("A31") },
-            { id: "A30", nombre: "Tealight A30", categoria: "Ánforas Tealight", material: "Brass", dimensiones: "13.5 cm x 9.5 cm aprox.", capacidad: "400 grs aprox.", peso: "1.016 kg / con vaso 1.098 kg", imagen: imgPlaceholder("A30") },
-
-            // ÁNFORAS MINI
-            { id: "A37", nombre: "Mini A37", categoria: "Ánforas Mini", material: "Brass", dimensiones: "8 cm x 8 cm aprox.", capacidad: "100 grs aprox.", peso: "228 grs / con pedestal 286 grs", imagen: imgPlaceholder("A37") },
-            { id: "A36", nombre: "Mini A36", categoria: "Ánforas Mini", material: "Brass", dimensiones: "8 cm x 8 cm aprox.", capacidad: "100 grs aprox.", peso: "258 grs / con pedestal 316 grs", imagen: imgPlaceholder("A36") },
-            { id: "A35", nombre: "Mini A35", categoria: "Ánforas Mini", material: "Brass", dimensiones: "8 cm x 8 cm aprox.", capacidad: "100 grs aprox.", peso: "228 grs / con pedestal 286 grs", imagen: imgPlaceholder("A35") },
-            { id: "A26", nombre: "Mini A26", categoria: "Ánforas Mini", material: "Brass", dimensiones: "8 cm x 8 cm aprox.", capacidad: "100 grs aprox.", peso: "235 grs / con pedestal 293 grs", imagen: imgPlaceholder("A26") },
-            { id: "A16", nombre: "Mini A16", categoria: "Ánforas Mini", material: "Brass", dimensiones: "8 cm x 8 cm aprox.", capacidad: "100 grs aprox.", peso: "140 grs", imagen: imgPlaceholder("A16") },
-            { id: "A15", nombre: "Mini A15", categoria: "Ánforas Mini", material: "Acero", dimensiones: "45 cm x 4 cm aprox.", capacidad: "25 grs aprox.", peso: "140 grs", extras: "Reparto", imagen: imgPlaceholder("A15") },
-            { id: "A13", nombre: "Mini A13", categoria: "Ánforas Mini", material: "Brass", dimensiones: "45 cm x 8 cm aprox.", capacidad: "50 grs aprox.", peso: "129 grs", extras: "Reparto", imagen: imgPlaceholder("A13") },
-            { id: "A38", nombre: "Mini A38", categoria: "Ánforas Mini", material: "Brass", dimensiones: "45 cm x 8 cm aprox.", capacidad: "50 grs aprox.", peso: "131 grs", extras: "Reparto", imagen: imgPlaceholder("A38") },
-            { id: "A28", nombre: "Mini A28", categoria: "Ánforas Mini", material: "Brass y nácar", dimensiones: "4.5 cm x 8 cm aprox.", capacidad: "50 grs aprox.", peso: "131 grs", extras: "Reparto", imagen: imgPlaceholder("A28") },
-            { id: "A33", nombre: "Mini A33", categoria: "Ánforas Mini", material: "Brass", dimensiones: "45 cm x 8 cm aprox.", capacidad: "50 grs aprox.", peso: "120 grs", extras: "Reparto", imagen: imgPlaceholder("A33") },
-
-            // ÁNFORAS ECOLÓGICAS
-            { id: "GEOS", nombre: "Geos", categoria: "Ánforas Ecológicas", material: "Tierra, coco y aglomerantes", dimensiones: "22 cm diámetro aprox.", capacidad: "500 grs aprox.", peso: "2.275 kg", extras: "Para sepultar en la tierra o despedida en el agua", imagen: imgPlaceholder("GEOS") },
-            { id: "MARE", nombre: "Mare", categoria: "Ánforas Ecológicas", material: "Sal y aglomerantes", dimensiones: "22 cm diámetro aprox.", capacidad: "500 grs aprox.", peso: "1.717 kg", extras: "Para sepultar en la tierra o despedida en el agua", imagen: imgPlaceholder("MARE") },
-
-            // JOYAS FUNERARIAS
-            { id: "C00", nombre: "Rectángulo", categoria: "Joyas Funerarias", material: "Acero inoxidable", dimensiones: "0.5 cm x 2.8 cm", peso: "6.65 grs", extras: "Incluye cadena y caja. A prueba de agua, hipoalergénicas.", imagen: imgPlaceholder("C00") },
-            { id: "C01", nombre: "Rectángulo L", categoria: "Joyas Funerarias", material: "Acero inoxidable", dimensiones: "0.5 cm x 4.4 cm", peso: "5.54 grs", extras: "Incluye cadena y caja. A prueba de agua, hipoalergénicas.", imagen: imgPlaceholder("C01") },
-            { id: "C02", nombre: "Infinito", categoria: "Joyas Funerarias", material: "Acero inoxidable", dimensiones: "0.5 cm x 2.8 cm", peso: "3.52 grs", extras: "Incluye cadena y caja. A prueba de agua, hipoalergénicas.", imagen: imgPlaceholder("C02") },
-            { id: "C03", nombre: "Corazón Ancho", categoria: "Joyas Funerarias", material: "Acero inoxidable", dimensiones: "2 cm x 2 cm", peso: "9.21 grs", extras: "Incluye cadena y caja. A prueba de agua, hipoalergénicas.", imagen: imgPlaceholder("C03") },
-            { id: "C04", nombre: "Corazón Largo", categoria: "Joyas Funerarias", material: "Acero inoxidable", dimensiones: "2 cm x 2.3 cm", peso: "13.07 grs", extras: "Incluye cadena y caja. A prueba de agua, hipoalergénicas.", imagen: imgPlaceholder("C04") },
-            { id: "C05", nombre: "Árbol de la vida", categoria: "Joyas Funerarias", material: "Acero inoxidable", dimensiones: "2.3 cm x 2.3 cm", peso: "7.01 grs", extras: "Incluye cadena y caja. A prueba de agua, hipoalergénicas.", imagen: imgPlaceholder("C05") },
-            { id: "C06", nombre: "Corazón Vidriado", categoria: "Joyas Funerarias", material: "Acero inoxidable", dimensiones: "1.2 cm x 1.2 cm", peso: "4.75 grs", extras: "Incluye cadena y caja. A prueba de agua, hipoalergénicas.", imagen: imgPlaceholder("C06") },
-            { id: "C08", nombre: "Embudo", categoria: "Joyas Funerarias", material: "Acero inoxidable", dimensiones: "1 cm x 1.9 cm", peso: "7.31 grs", extras: "Incluye cadena y caja. A prueba de agua, hipoalergénicas.", imagen: imgPlaceholder("C08") },
-            { id: "C09", nombre: "Cruz", categoria: "Joyas Funerarias", material: "Acero inoxidable", dimensiones: "2 cm x 3 cm", peso: "10.54 grs", extras: "Incluye cadena y caja. A prueba de agua, hipoalergénicas.", imagen: imgPlaceholder("C09") },
-            { id: "C18", nombre: "Lágrima", categoria: "Joyas Funerarias", material: "Acero inoxidable", dimensiones: "1 cm x 1.8 cm", peso: "8.90 grs", extras: "Incluye cadena y caja. A prueba de agua, hipoalergénicas.", imagen: imgPlaceholder("C18") },
-            { id: "C19", nombre: "Corazón Chico", categoria: "Joyas Funerarias", material: "Acero inoxidable", dimensiones: "1 cm x 1.2 cm", peso: "3.71 grs", extras: "Incluye cadena y caja. A prueba de agua, hipoalergénicas.", imagen: imgPlaceholder("C19") },
-            { id: "C25", nombre: "Cubo Brillante", categoria: "Joyas Funerarias", material: "Acero inoxidable", dimensiones: "1.1 cm x 1.1 cm", peso: "10.23 grs", extras: "Incluye cadena y caja. A prueba de agua, hipoalergénicas.", imagen: imgPlaceholder("C25") },
-            { id: "C26", nombre: "Cola de Ballena", categoria: "Joyas Funerarias", material: "Acero inoxidable", dimensiones: "2.5 cm x 3 cm", peso: "10.31 grs", extras: "Incluye cadena y caja. A prueba de agua, hipoalergénicas.", imagen: imgPlaceholder("C26") },
-            { id: "C30", nombre: "Luna", categoria: "Joyas Funerarias", material: "Acero inoxidable", dimensiones: "2 cm x 1.5 cm", peso: "6.10 grs", extras: "Incluye cadena y caja. A prueba de agua, hipoalergénicas.", imagen: imgPlaceholder("C30") },
-            { id: "C31", nombre: "Estrella", categoria: "Joyas Funerarias", material: "Acero inoxidable", dimensiones: "1.8 cm x 1.8 cm", peso: "3.81 grs", extras: "Incluye cadena y caja. A prueba de agua, hipoalergénicas.", imagen: imgPlaceholder("C31") },
-            { id: "C32", nombre: "Brújula", categoria: "Joyas Funerarias", material: "Acero inoxidable", dimensiones: "0.8 cm x 1.2 cm", peso: "3.00 grs", extras: "Incluye cadena y caja. A prueba de agua, hipoalergénicas.", imagen: imgPlaceholder("C32") }
-        ];
-
-        const grid = document.getElementById('catalogGrid');
-        const searchInput = document.getElementById('searchInput');
-        const categoryFilter = document.getElementById('categoryFilter');
-
-        // Renderizar las tarjetas
-        function renderizarCatalogo() {
-            grid.innerHTML = '';
-            
-            const query = searchInput.value.toLowerCase();
-            const cat = categoryFilter.value;
-
-            const filtrados = productos.filter(p => {
-                const matchTexto = p.nombre.toLowerCase().includes(query) || p.id.toLowerCase().includes(query);
-                const matchCategoria = (cat === 'all') || (p.categoria === cat);
-                return matchTexto && matchCategoria;
-            });
-
-            if (filtrados.length === 0) {
-                grid.innerHTML = `<div class="empty-state">No hemos encontrado productos que coincidan con tu búsqueda.</div>`;
-                return;
-            }
-
-            filtrados.forEach(p => {
-                const card = document.createElement('div');
-                card.className = 'product-card';
-                card.onclick = () => showModal(p);
-                
-                card.innerHTML = `
-                    <div class="card-image">
-                        <img src="${p.imagen}" alt="${p.nombre}">
-                    </div>
-                    <div class="card-content">
-                        <div class="card-category">${p.categoria}</div>
-                        <h2 class="card-title">${p.nombre} (${p.id})</h2>
-                        <div class="card-details">
-                            <strong>Material:</strong> ${p.material}<br>
-                            ${p.capacidad ? `<strong>Capacidad:</strong> ${p.capacidad}` : ''}
-                        </div>
-                    </div>
-                `;
-                grid.appendChild(card);
-            });
-        }
-
-        // Lógica del Modal
-        function showModal(p) {
-            document.getElementById('modalImg').src = p.imagen;
-            document.getElementById('modalCat').textContent = p.categoria;
-            document.getElementById('modalTitle').textContent = `${p.nombre} - ${p.id}`;
-            
-            const specsList = document.getElementById('modalSpecs');
-            specsList.innerHTML = `
-                <li><strong>Material:</strong> ${p.material}</li>
-                <li><strong>Dimensiones:</strong> ${p.dimensiones}</li>
-                ${p.capacidad ? `<li><strong>Capacidad:</strong> ${p.capacidad}</li>` : ''}
-                <li><strong>Peso:</strong> ${p.peso}</li>
-                ${p.extras ? `<li><strong>Detalles extra:</strong> ${p.extras}</li>` : ''}
-            `;
-            
-            document.getElementById('modalOverlay').classList.add('open');
-        }
-
-        function closeModal() { 
-            document.getElementById('modalOverlay').classList.remove('open'); 
-        }
-
-        // Eventos
-        searchInput.addEventListener('input', renderizarCatalogo);
-        categoryFilter.addEventListener('change', renderizarCatalogo);
-
-        // Inicializar
-        renderizarCatalogo();
-    </script>
+<nav aria-label="Navegación">
+  <button id="prev" aria-label="Diapositiva anterior">▲</button>
+  <button id="next" aria-label="Diapositiva siguiente">▼</button>
+</nav>
+<script>
+(function(){
+  var s=[].slice.call(document.querySelectorAll('.slide'));
+  function cur(){var y=window.scrollY+window.innerHeight/2,i=0;s.forEach(function(e,k){if(e.offsetTop<=y)i=k});return i}
+  function go(d){var i=Math.max(0,Math.min(s.length-1,cur()+d));s[i].scrollIntoView({behavior:'smooth'})}
+  document.getElementById('prev').onclick=function(){go(-1)};
+  document.getElementById('next').onclick=function(){go(1)};
+  document.addEventListener('keydown',function(e){
+    if(['ArrowRight','ArrowDown','PageDown',' '].indexOf(e.key)>-1){e.preventDefault();go(1)}
+    if(['ArrowLeft','ArrowUp','PageUp'].indexOf(e.key)>-1){e.preventDefault();go(-1)}
+  });
+})();
+</script>
 </body>
 </html>
